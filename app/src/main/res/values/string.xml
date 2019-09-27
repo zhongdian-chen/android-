@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="loudong1">
+        <item>请选择楼号</item>
+        <item>公寓1-A</item>
+        <item>公寓1-B</item>
+        <item>公寓1-C</item>
+    </string-array>
+    <string-array name="loudong2">
+        <item>请选择楼号</item>
+        <item>公寓2-A</item>
+        <item>公寓2-B</item>
+        <item>公寓2-C</item>
+    </string-array>
+    <string-array name="louhao1">
+        <item>请选择楼号</item>
+        <item>公寓1-A</item>
+        <item>公寓1-B</item>
+        <item>公寓1-C</item>
+    </string-array>
+    <string-array name="louhao2">
+        <item>请选择楼号</item>
+        <item>公寓2-A</item>
+        <item>公寓2-B</item>
+        <item>公寓2-C</item>
+    </string-array>
+    <string-array name="louceng1">
+        <item>请选择楼层</item>
+        <item>1楼</item>
+        <item>2楼</item>
+        <item>3楼</item>
+    </string-array>
+    <string-array name="qinshihao1">
+        <item>请选择寝室号</item>
+        <item>101</item>
+        <item>102</item>
+        <item>103</item>
+        <item>104</item>
+        <item>105</item>
+        <item>106</item>
+    </string-array>
+    <string-array name="qinshihao2">
+        <item>请选择寝室号</item>
+        <item>201</item>
+        <item>202</item>
+        <item>203</item>
+        <item>204</item>
+        <item>205</item>
+        <item>206</item>
+    </string-array>
+    <string-array name="qinshihao3">
+        <item>请选择寝室号</item>
+        <item>301</item>
+        <item>302</item>
+        <item>303</item>
+        <item>304</item>
+        <item>305</item>
+        <item>306</item>
+    </string-array>
+
+</resources>
