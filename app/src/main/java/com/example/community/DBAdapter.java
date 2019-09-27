@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-
 public class DBAdapter {
     private static final String DB_NAME = "people.db";      // 数据库名称
     private static final String DB_TABLE = "peopleinfo";    // 数据表名称
