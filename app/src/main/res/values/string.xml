@@ -24,11 +24,19 @@
         <item>公寓2-B</item>
         <item>公寓2-C</item>
     </string-array>
+    <string-array name="louhao3">
+        <item>请选择楼号</item>
+        <item>商铺</item>
+    </string-array>
     <string-array name="louceng1">
         <item>请选择楼层</item>
         <item>1楼</item>
         <item>2楼</item>
         <item>3楼</item>
+    </string-array>
+    <string-array name="louceng2">
+        <item>请选择楼层</item>
+        <item>1楼</item>
     </string-array>
     <string-array name="qinshihao1">
         <item>请选择寝室号</item>
@@ -56,6 +64,15 @@
         <item>304</item>
         <item>305</item>
         <item>306</item>
+    </string-array>
+    <string-array name="qinshihao4">
+        <item>请选择寝室号</item>
+        <item>13号区域商铺</item>
+        <item>商铺总表</item>
+        <item>嘉兴学院</item>
+        <item>嘉兴学院越秀校区</item>
+        <item>备用</item>
+        <item>文苑宾馆</item>
     </string-array>
 
 </resources>

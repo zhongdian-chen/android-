@@ -46,12 +46,13 @@ public class register extends AppCompatActivity {
             People people = new People();
             String Pho = PhoText.getText().toString();
             People[] peoples = dbAdapter.queryAllData();
-            for (int i = 0; i < peoples.length; i++){
-                if (Pho.equals(peoples[i].Pho)) {
-                    flag = true;
-                    break;
+            if (peoples != null)
+                for (int i = 0; i < peoples.length; i++){
+                    if (Pho.equals(peoples[i].Pho)) {
+                        flag = true;
+                        break;
+                    }
                 }
-            }
             people.Name = NameText.getText().toString();
             people.Num = NumText.getText().toString();
             people.Pwd = PwdText.getText().toString();
