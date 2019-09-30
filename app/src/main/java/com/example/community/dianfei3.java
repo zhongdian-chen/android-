@@ -14,8 +14,13 @@ public class dianfei3 extends AppCompatActivity {
         TextView info=findViewById(R.id.info);
         Intent intent=this.getIntent();
         String show1 = intent.getStringExtra("show1");
-        info.setText(show1);
         String show2 = intent.getStringExtra("show2");
         String show3= intent.getStringExtra("show3");
+        if(show1!=null)
+            info.setText(show1);
+        else if(show2!=null)
+            info.setText(show2);
+        else
+            info.setText(show3);
     }
 }

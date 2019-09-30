@@ -61,7 +61,6 @@ public class dianfei1 extends AppCompatActivity {
                         chongzhi3.setVisibility(View.VISIBLE);
                         delete3.setVisibility(View.VISIBLE);
                         show3.setText(show33);
-                        Toast.makeText(dianfei1.this,"1",Toast.LENGTH_SHORT).show();
                     }else if ( show33.equals("") && !show22.equals("")){
                         chongzhi1.setVisibility(View.VISIBLE);
                         delete1.setVisibility(View.VISIBLE);
@@ -71,7 +70,6 @@ public class dianfei1 extends AppCompatActivity {
                         show2.setText(show22);
                         chongzhi3.setVisibility(View.GONE);
                         delete3.setVisibility(View.GONE);
-                        Toast.makeText(dianfei1.this,"2",Toast.LENGTH_SHORT).show();
                     }else{
                         chongzhi1.setVisibility(View.VISIBLE);
                         delete1.setVisibility(View.VISIBLE);
@@ -80,7 +78,6 @@ public class dianfei1 extends AppCompatActivity {
                         delete2.setVisibility(View.GONE);
                         chongzhi3.setVisibility(View.GONE);
                         delete3.setVisibility(View.GONE);
-                        Toast.makeText(dianfei1.this,"2.5",Toast.LENGTH_SHORT).show();
                     }
                 }else{
                     chongzhi1.setVisibility(View.VISIBLE);
@@ -90,7 +87,6 @@ public class dianfei1 extends AppCompatActivity {
                     delete2.setVisibility(View.GONE);
                     chongzhi3.setVisibility(View.GONE);
                     delete3.setVisibility(View.GONE);
-                    Toast.makeText(dianfei1.this,"3",Toast.LENGTH_SHORT).show();
                 }
             }else if ( !show11.equals("") && show22.equals("") || gongyu2.equals(gongyu)){
                 if( gongyu1!=null && gongyu2!=null &&  gongyu2.equals(gongyu)){
@@ -103,7 +99,6 @@ public class dianfei1 extends AppCompatActivity {
                         show2.setText(zong);
                         chongzhi3.setVisibility(View.GONE);
                         delete3.setVisibility(View.GONE);
-                        Toast.makeText(dianfei1.this,"10",Toast.LENGTH_SHORT).show();
                     }else if( !show33.equals("") ){
                         chongzhi1.setVisibility(View.VISIBLE);
                         delete1.setVisibility(View.VISIBLE);
@@ -124,7 +119,6 @@ public class dianfei1 extends AppCompatActivity {
                     show2.setText(zong);
                     chongzhi3.setVisibility(View.GONE);
                     delete3.setVisibility(View.GONE);
-                    Toast.makeText(dianfei1.this,"8",Toast.LENGTH_SHORT).show();
                 }
             }else if ( !show11.equals("") && !show22.equals("") && show33.equals("") || (gongyu3!=null && gongyu3.equals(gongyu))){
                 chongzhi1.setVisibility(View.VISIBLE);
@@ -136,7 +130,6 @@ public class dianfei1 extends AppCompatActivity {
                 chongzhi3.setVisibility(View.VISIBLE);
                 delete3.setVisibility(View.VISIBLE);
                 show3.setText(zong);
-                Toast.makeText(dianfei1.this,"7",Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -191,7 +184,6 @@ public class dianfei1 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(dianfei1.this,dianfei3.class);
                 intent.putExtra("show1",show1.getText().toString());
-                String gongyu = intent.getStringExtra("公寓");
                 startActivity(intent);
             }
         });
@@ -199,8 +191,7 @@ public class dianfei1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(dianfei1.this,dianfei3.class);
-                intent.putExtra("show2",show1.getText().toString());
-                String gongyu = intent.getStringExtra("公寓");
+                intent.putExtra("show2",show2.getText().toString());
                 startActivity(intent);
             }
         });
@@ -208,8 +199,7 @@ public class dianfei1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(dianfei1.this,dianfei3.class);
-                intent.putExtra("show3",show1.getText().toString());
-                String gongyu = intent.getStringExtra("公寓");
+                intent.putExtra("show3",show3.getText().toString());
                 startActivity(intent);
             }
         });

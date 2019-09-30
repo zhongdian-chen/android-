@@ -233,7 +233,6 @@ public class dianfei2 extends AppCompatActivity {
                 intent.putExtra("gongyu1",gongyu1);
                 intent.putExtra("gongyu2",gongyu2);
                 intent.putExtra("gongyu3",gongyu3);
-                Toast.makeText(dianfei2.this,gongyu1,Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
