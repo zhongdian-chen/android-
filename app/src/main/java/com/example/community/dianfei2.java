@@ -14,6 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class dianfei2 extends AppCompatActivity {
+    private DianfeiInfoDBAapter dianfeiInfoDBAapter;
+    private String gongyu;
+    private String louhao;
+    private String louceng;
+    private String qinshihao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,8 @@ public class dianfei2 extends AppCompatActivity {
         final Spinner louceng=(Spinner)findViewById(R.id.louceng);
         final Spinner sushehao=(Spinner)findViewById(R.id.sushehao);
         Button next=(Button)findViewById(R.id.next);
+        Intent intent = getIntent();
+        final String Num = intent.getStringExtra("num");
 
         final String[] louhao1 = getResources().getStringArray(R.array.louhao1);
         final String[] louhao2 = getResources().getStringArray(R.array.louhao2);
@@ -189,9 +196,20 @@ public class dianfei2 extends AppCompatActivity {
             }
         });
 
+        dianfeiInfoDBAapter = new DianfeiInfoDBAapter(this);
+        dianfeiInfoDBAapter.open();
         next.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
+
+                DianfeiInfo dianfeiInfo=new DianfeiInfo();
+                dianfeiInfo.Num=Num;
+                dianfeiInfo.gongyu=gongyu.getSelectedItem().toString();
+                dianfeiInfo.louhao=louhao.getSelectedItem().toString();
+                dianfeiInfo.louceng=louceng.getSelectedItem().toString();
+                dianfeiInfo.qisnhihao=sushehao.getSelectedItem().toString();
+                long colunm = dianfeiInfoDBAapter.insert(dianfeiInfo);
+
                 Intent intent1 = getIntent();
                 String show1 = intent1.getStringExtra("show1");
                 String show2 = intent1.getStringExtra("show2");
@@ -200,6 +218,7 @@ public class dianfei2 extends AppCompatActivity {
                 String gongyu2 = intent1.getStringExtra("gongyu2");
                 String gongyu3 = intent1.getStringExtra("gongyu3");
                 Intent intent=new Intent(dianfei2.this,dianfei1.class);
+                intent.putExtra("num",Num);
                 String str1=(String)gongyu.getSelectedItem();
                 String str2=(String)louhao.getSelectedItem();
                 String str3=(String)louceng.getSelectedItem();

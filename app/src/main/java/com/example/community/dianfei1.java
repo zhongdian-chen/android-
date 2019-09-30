@@ -41,7 +41,7 @@ public class dianfei1 extends AppCompatActivity {
         final String zong=gongyu+louhao+louceng+qinshihao;
 
 
-        if (gongyu == null){
+        if (gongyu == null||louhao==null||louceng==null||qinshihao==null){
             chongzhi1.setVisibility(View.GONE);
             delete1.setVisibility(View.GONE);
             chongzhi2.setVisibility(View.GONE);
@@ -184,6 +184,33 @@ public class dianfei1 extends AppCompatActivity {
                 show3.setText("");
                 chongzhi3.setVisibility(View.GONE);
                 delete3.setVisibility(View.GONE);
+            }
+        });
+        chongzhi1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(dianfei1.this,dianfei3.class);
+                intent.putExtra("show1",show1.getText().toString());
+                String gongyu = intent.getStringExtra("公寓");
+                startActivity(intent);
+            }
+        });
+        chongzhi2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(dianfei1.this,dianfei3.class);
+                intent.putExtra("show2",show1.getText().toString());
+                String gongyu = intent.getStringExtra("公寓");
+                startActivity(intent);
+            }
+        });
+        chongzhi3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(dianfei1.this,dianfei3.class);
+                intent.putExtra("show3",show1.getText().toString());
+                String gongyu = intent.getStringExtra("公寓");
+                startActivity(intent);
             }
         });
     }
