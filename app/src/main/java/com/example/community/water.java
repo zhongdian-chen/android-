@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -27,6 +29,8 @@ public class water extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.water);
+        final TextView price = findViewById(R.id.price);
+        final TextView sum = findViewById(R.id.sum);
         final Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
         final Spinner spinner2=(Spinner)findViewById(R.id.spinner2);
         final Spinner spinner3=(Spinner)findViewById(R.id.spinner3);
@@ -36,8 +40,8 @@ public class water extends AppCompatActivity {
         final String[] loudong2 = getResources().getStringArray(R.array.loudong2);
         Button check=findViewById(R.id.check);
         Button cancle = findViewById(R.id.cancel);
-        TextView name = findViewById(R.id.name);
-        TextView pho = findViewById(R.id.pho);
+        final TextView name = findViewById(R.id.name);
+        final TextView pho = findViewById(R.id.pho);
         Intent intent = getIntent();
         final String Name = intent.getStringExtra("name");
         final String Pho = intent.getStringExtra("pho");
@@ -107,7 +111,6 @@ public class water extends AppCompatActivity {
         listspinner2.add("山泉水（大桶）");
         listspinner2.add("纯净水");
         listspinner2.add("12L农夫山泉（一次性桶）");
-        listspinner2.add("550ML瓶装农夫山泉（28瓶/箱）");
         ArrayAdapter<String> adapter3=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, listspinner2);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner3.setAdapter(adapter3);
@@ -115,11 +118,44 @@ public class water extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 WaterItem = spinner3.getSelectedItem().toString();
+                if (WaterItem.equals("山泉水（小桶）"))
+                    price.setText("6元/桶");
+                else if(WaterItem.equals("山泉水（大桶）"))
+                    price.setText("9元/桶");
+                else if(WaterItem.equals("纯净水"))
+                    price.setText("15元/桶");
+                else if(WaterItem.equals("12L农夫山泉（一次性桶）"))
+                    price.setText("25元/桶");
             }
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
+
+        count.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                String oneprice = price.getText().toString();
+                Pattern p=Pattern.compile("[a-zA-Z]");
+                Matcher m=p.matcher(count.getText().toString());
+                if (actionId == EditorInfo.IME_ACTION_DONE){
+                    if( !count.getText().toString().equals("") ){
+                        if (WaterItem.equals("请选择桶装水"))
+                            Toast.makeText(water.this,"请先选择桶装水",Toast.LENGTH_SHORT).show();
+                        else{
+                            if (m.matches() || Integer.parseInt(count.getText().toString())>5 || Integer.parseInt(count.getText().toString())<1 )
+                                Toast.makeText(water.this,"桶装水数量应为1-2桶",Toast.LENGTH_SHORT).show();
+                            else{
+                                String sumprice = String.valueOf(Integer.parseInt(count.getText().toString()) * Integer.parseInt(oneprice.substring(0, oneprice.indexOf("元"))));
+                                sum.setText(sumprice);
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+        });
+
 
 
         waterInfoDBAdapter = new WaterInfoDBAdapter(this);
@@ -135,9 +171,7 @@ public class water extends AppCompatActivity {
                 waterInfo.RoomNum = room.getText().toString();
                 waterInfo.WaterItem = WaterItem;
                 waterInfo.Count = count.getText().toString();
-                Pattern p=Pattern.compile("[a-zA-Z]");
-                Matcher m=p.matcher(count.getText().toString());
-                long colunm = waterInfoDBAdapter.insert(waterInfo);
+                waterInfoDBAdapter.insert(waterInfo);
                 if(XiaoQuItem.equals("请选择校区")){
                     Toast.makeText(water.this,"请选择校区",Toast.LENGTH_SHORT).show();
                 }else if(LouItem.equals("请选择楼号")){
@@ -148,8 +182,6 @@ public class water extends AppCompatActivity {
                     Toast.makeText(water.this,"请选择桶装水",Toast.LENGTH_SHORT).show();
                 }else if(TextUtils.isEmpty(count.getText())){
                     Toast.makeText(water.this,"请输入桶装水数量",Toast.LENGTH_SHORT).show();
-                }else if(m.matches() || Integer.parseInt(count.getText().toString())>5 || Integer.parseInt(count.getText().toString())<1 ){
-                    Toast.makeText(water.this,"桶装水数量应为1-2桶",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(water.this, "工作人员正在加急处理中", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(water.this, main.class);

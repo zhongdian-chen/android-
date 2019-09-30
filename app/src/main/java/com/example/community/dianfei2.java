@@ -201,39 +201,48 @@ public class dianfei2 extends AppCompatActivity {
         next.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
+                if (gongyu.getSelectedItem().toString().equals("请选择公寓")){
+                    Toast.makeText(dianfei2.this,"请选择公寓",Toast.LENGTH_SHORT).show();
+                }else if(louhao.getSelectedItem().toString().equals("请选择楼号")){
+                    Toast.makeText(dianfei2.this,"请选择楼号",Toast.LENGTH_SHORT).show();
+                }else if(louceng.getSelectedItem().toString().equals("请选择楼层")){
+                    Toast.makeText(dianfei2.this,"请选择楼层",Toast.LENGTH_SHORT).show();
+                }else if(sushehao.getSelectedItem().toString().equals("请选择寝室号")){
+                    Toast.makeText(dianfei2.this,"请选择寝室号",Toast.LENGTH_SHORT).show();
+                }else {
+                    DianfeiInfo dianfeiInfo=new DianfeiInfo();
+                    dianfeiInfo.Num=Num;
+                    dianfeiInfo.gongyu = gongyu.getSelectedItem().toString();
+                    dianfeiInfo.louhao = louhao.getSelectedItem().toString();
+                    dianfeiInfo.louceng = louceng.getSelectedItem().toString();
+                    dianfeiInfo.qisnhihao = sushehao.getSelectedItem().toString();long colunm = dianfeiInfoDBAapter.insert(dianfeiInfo);
 
-                DianfeiInfo dianfeiInfo=new DianfeiInfo();
-                dianfeiInfo.Num=Num;
-                dianfeiInfo.gongyu=gongyu.getSelectedItem().toString();
-                dianfeiInfo.louhao=louhao.getSelectedItem().toString();
-                dianfeiInfo.louceng=louceng.getSelectedItem().toString();
-                dianfeiInfo.qisnhihao=sushehao.getSelectedItem().toString();
-                long colunm = dianfeiInfoDBAapter.insert(dianfeiInfo);
+                    Intent intent1 = getIntent();
+                    String show1 = intent1.getStringExtra("show1");
+                    String show2 = intent1.getStringExtra("show2");
+                    String show3 = intent1.getStringExtra("show3");
+                    String gongyu1 = intent1.getStringExtra("gongyu1");
+                    String gongyu2 = intent1.getStringExtra("gongyu2");
+                    String gongyu3 = intent1.getStringExtra("gongyu3");
+                    Intent intent=new Intent(dianfei2.this,dianfei1.class);
+                    intent.putExtra("num",Num);
+                    String str1=(String)gongyu.getSelectedItem();
+                    String str2=(String)louhao.getSelectedItem();
+                    String str3=(String)louceng.getSelectedItem();
+                    String str4=(String)sushehao.getSelectedItem();
+                    intent.putExtra("公寓",str1);
+                    intent.putExtra("楼号",str2);
+                    intent.putExtra("楼层",str3);
+                    intent.putExtra("寝室号",str4);
+                    intent.putExtra("show1",show1);
+                    intent.putExtra("show2",show2);
+                    intent.putExtra("show3",show3);
+                    intent.putExtra("gongyu1",gongyu1);
+                    intent.putExtra("gongyu2",gongyu2);
+                    intent.putExtra("gongyu3",gongyu3);
+                    startActivity(intent);
+                }
 
-                Intent intent1 = getIntent();
-                String show1 = intent1.getStringExtra("show1");
-                String show2 = intent1.getStringExtra("show2");
-                String show3 = intent1.getStringExtra("show3");
-                String gongyu1 = intent1.getStringExtra("gongyu1");
-                String gongyu2 = intent1.getStringExtra("gongyu2");
-                String gongyu3 = intent1.getStringExtra("gongyu3");
-                Intent intent=new Intent(dianfei2.this,dianfei1.class);
-                intent.putExtra("num",Num);
-                String str1=(String)gongyu.getSelectedItem();
-                String str2=(String)louhao.getSelectedItem();
-                String str3=(String)louceng.getSelectedItem();
-                String str4=(String)sushehao.getSelectedItem();
-                intent.putExtra("公寓",str1);
-                intent.putExtra("楼号",str2);
-                intent.putExtra("楼层",str3);
-                intent.putExtra("寝室号",str4);
-                intent.putExtra("show1",show1);
-                intent.putExtra("show2",show2);
-                intent.putExtra("show3",show3);
-                intent.putExtra("gongyu1",gongyu1);
-                intent.putExtra("gongyu2",gongyu2);
-                intent.putExtra("gongyu3",gongyu3);
-                startActivity(intent);
             }
         });
     }
