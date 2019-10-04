@@ -77,6 +77,7 @@ public class DBAdapter {
         context.deleteDatabase(DB_NAME);
     }
 
+
     // 增加记录
     public long insert(People people){
         // 生成 ContentValues 对象

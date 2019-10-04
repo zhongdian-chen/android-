@@ -15,32 +15,33 @@ import java.util.List;
 
 public class dianfei2 extends AppCompatActivity {
     private DianfeiInfoDBAapter dianfeiInfoDBAapter;
-    private String gongyu;
-    private String louhao;
-    private String louceng;
-    private String qinshihao;
+    private String addr, Num;
+    private Button next;
+    private Spinner gongyu, louhao, louceng, sushehao;
+    private String[] louhao1,louhao2,louhao3,louceng1,louceng2,qinshihao1,qinshihao2,qinshihao3,qinshihao4;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dianfei2);
-        final Spinner gongyu=(Spinner)findViewById(R.id.gongyu);
-        final Spinner louhao=(Spinner)findViewById(R.id.louhao);
-        final Spinner louceng=(Spinner)findViewById(R.id.louceng);
-        final Spinner sushehao=(Spinner)findViewById(R.id.sushehao);
-        Button next=(Button)findViewById(R.id.next);
+        gongyu = findViewById(R.id.gongyu);
+        louhao = findViewById(R.id.louhao);
+        louceng = findViewById(R.id.louceng);
+        sushehao = findViewById(R.id.sushehao);
+        next = findViewById(R.id.next);
+        next.setOnClickListener(nextListener);
         Intent intent = getIntent();
-        final String Num = intent.getStringExtra("num");
+        Num = intent.getStringExtra("num");
 
-        final String[] louhao1 = getResources().getStringArray(R.array.louhao1);
-        final String[] louhao2 = getResources().getStringArray(R.array.louhao2);
-        final String[] louhao3 = getResources().getStringArray(R.array.louhao3);
-        final String[] louceng1 = getResources().getStringArray(R.array.louceng1);
-        final String[] louceng2 = getResources().getStringArray(R.array.louceng2);
-        final String[] qinshihao1 = getResources().getStringArray(R.array.qinshihao1);
-        final String[] qinshihao2 = getResources().getStringArray(R.array.qinshihao2);
-        final String[] qinshihao3 = getResources().getStringArray(R.array.qinshihao3);
-        final String[] qinshihao4 = getResources().getStringArray(R.array.qinshihao4);
+        louhao1 = getResources().getStringArray(R.array.louhao1);
+        louhao2 = getResources().getStringArray(R.array.louhao2);
+        louhao3 = getResources().getStringArray(R.array.louhao3);
+        louceng1 = getResources().getStringArray(R.array.louceng1);
+        louceng2 = getResources().getStringArray(R.array.louceng2);
+        qinshihao1 = getResources().getStringArray(R.array.qinshihao1);
+        qinshihao2 = getResources().getStringArray(R.array.qinshihao2);
+        qinshihao3 = getResources().getStringArray(R.array.qinshihao3);
+        qinshihao4 = getResources().getStringArray(R.array.qinshihao4);
 
         List<String> listspinner4=new ArrayList<String>();
         listspinner4.add("请选择公寓");
@@ -198,52 +199,49 @@ public class dianfei2 extends AppCompatActivity {
 
         dianfeiInfoDBAapter = new DianfeiInfoDBAapter(this);
         dianfeiInfoDBAapter.open();
-        next.setOnClickListener(new Button.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                if (gongyu.getSelectedItem().toString().equals("请选择公寓")){
-                    Toast.makeText(dianfei2.this,"请选择公寓",Toast.LENGTH_SHORT).show();
-                }else if(louhao.getSelectedItem().toString().equals("请选择楼号")){
-                    Toast.makeText(dianfei2.this,"请选择楼号",Toast.LENGTH_SHORT).show();
-                }else if(louceng.getSelectedItem().toString().equals("请选择楼层")){
-                    Toast.makeText(dianfei2.this,"请选择楼层",Toast.LENGTH_SHORT).show();
-                }else if(sushehao.getSelectedItem().toString().equals("请选择寝室号")){
-                    Toast.makeText(dianfei2.this,"请选择寝室号",Toast.LENGTH_SHORT).show();
-                }else {
-                    DianfeiInfo dianfeiInfo=new DianfeiInfo();
-                    dianfeiInfo.Num=Num;
-                    dianfeiInfo.gongyu = gongyu.getSelectedItem().toString();
-                    dianfeiInfo.louhao = louhao.getSelectedItem().toString();
-                    dianfeiInfo.louceng = louceng.getSelectedItem().toString();
-                    dianfeiInfo.qisnhihao = sushehao.getSelectedItem().toString();long colunm = dianfeiInfoDBAapter.insert(dianfeiInfo);
-
-                    Intent intent1 = getIntent();
-                    String show1 = intent1.getStringExtra("show1");
-                    String show2 = intent1.getStringExtra("show2");
-                    String show3 = intent1.getStringExtra("show3");
-                    String gongyu1 = intent1.getStringExtra("gongyu1");
-                    String gongyu2 = intent1.getStringExtra("gongyu2");
-                    String gongyu3 = intent1.getStringExtra("gongyu3");
-                    Intent intent=new Intent(dianfei2.this,dianfei1.class);
-                    intent.putExtra("num",Num);
-                    String str1=(String)gongyu.getSelectedItem();
-                    String str2=(String)louhao.getSelectedItem();
-                    String str3=(String)louceng.getSelectedItem();
-                    String str4=(String)sushehao.getSelectedItem();
-                    intent.putExtra("公寓",str1);
-                    intent.putExtra("楼号",str2);
-                    intent.putExtra("楼层",str3);
-                    intent.putExtra("寝室号",str4);
-                    intent.putExtra("show1",show1);
-                    intent.putExtra("show2",show2);
-                    intent.putExtra("show3",show3);
-                    intent.putExtra("gongyu1",gongyu1);
-                    intent.putExtra("gongyu2",gongyu2);
-                    intent.putExtra("gongyu3",gongyu3);
-                    startActivity(intent);
-                }
-
-            }
-        });
     }
+
+    View.OnClickListener nextListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if (gongyu.getSelectedItem().toString().equals("请选择公寓")){
+                Toast.makeText(dianfei2.this,"请选择公寓",Toast.LENGTH_SHORT).show();
+            }else if(louhao.getSelectedItem().toString().equals("请选择楼号")){
+                Toast.makeText(dianfei2.this,"请选择楼号",Toast.LENGTH_SHORT).show();
+            }else if(louceng.getSelectedItem().toString().equals("请选择楼层")){
+                Toast.makeText(dianfei2.this,"请选择楼层",Toast.LENGTH_SHORT).show();
+            }else if(sushehao.getSelectedItem().toString().equals("请选择寝室号")){
+                Toast.makeText(dianfei2.this,"请选择寝室号",Toast.LENGTH_SHORT).show();
+            }else {
+                addr = gongyu.getSelectedItem().toString()+louhao.getSelectedItem().toString()+louceng.getSelectedItem().toString()+sushehao.getSelectedItem().toString();
+                DianfeiInfo dianfeiInfo=new DianfeiInfo();
+                DianfeiInfo[] dianfeiInfos = dianfeiInfoDBAapter.queryAllData();
+                if ( dianfeiInfos!=null) {
+                    for (int i = 0; i < dianfeiInfos.length; i++) {
+                        if (Num.equals(dianfeiInfos[i].Num)){
+                            if (addr.equals(dianfeiInfos[i].Addr)){
+                                break;
+                            }
+                        }
+                        if (i + 1 == dianfeiInfos.length) {
+                            dianfeiInfo.Num = Num;
+                            dianfeiInfo.Addr = addr;
+                            dianfeiInfo.Elec = "0";
+                            dianfeiInfoDBAapter.insert(dianfeiInfo);
+                        }
+                    }
+                }else{
+                    dianfeiInfo.Num = Num;
+                    dianfeiInfo.Addr = addr;
+                    dianfeiInfo.Elec = "0";
+                    dianfeiInfoDBAapter.insert(dianfeiInfo);
+                }
+                Intent intent=new Intent(dianfei2.this,dianfei1.class);
+                intent.putExtra("num",Num);
+                intent.putExtra("gongyu",gongyu.getSelectedItem().toString());
+                intent.putExtra("addr",addr);
+                startActivity(intent);
+            }
+        }
+    };
 }

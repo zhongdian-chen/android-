@@ -8,8 +8,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class dianfei1 extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
 
+public class dianfei1 extends AppCompatActivity {
+    private DianfeiInfoDBAapter dianfeiInfoDBAapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,116 +31,113 @@ public class dianfei1 extends AppCompatActivity {
         final TextView delete3=findViewById(R.id.delete3);
 
         Intent intent=this.getIntent();
-        final String gongyu = intent.getStringExtra("公寓");
-        final String louhao = intent.getStringExtra("楼号");
-        final String louceng = intent.getStringExtra("楼层");
-        final String qinshihao = intent.getStringExtra("寝室号");
-        final String show11 = intent.getStringExtra("show1");
-        final String show22 = intent.getStringExtra("show2");
-        final String show33 = intent.getStringExtra("show3");
-        final String gongyu1 = intent.getStringExtra("gongyu1");
-        final String gongyu2 = intent.getStringExtra("gongyu2");
-        final String gongyu3 = intent.getStringExtra("gongyu3");
-        final String zong=gongyu+louhao+louceng+qinshihao;
+        final String num = intent.getStringExtra("num");
+        final String addr = intent.getStringExtra("addr");
+        String gongyu = intent.getStringExtra("gongyu");
+        String addr1 = intent.getStringExtra("show1");
+        String addr2 = intent.getStringExtra("show2");
+        String addr3 = intent.getStringExtra("show3");
 
 
-        if (gongyu == null||louhao==null||louceng==null||qinshihao==null){
+        dianfeiInfoDBAapter = new DianfeiInfoDBAapter(this);
+        dianfeiInfoDBAapter.open();
+        final DianfeiInfo[] dianfeiInfos = dianfeiInfoDBAapter.queryAllData();
+
+        if (dianfeiInfos == null){
             chongzhi1.setVisibility(View.GONE);
             delete1.setVisibility(View.GONE);
             chongzhi2.setVisibility(View.GONE);
             delete2.setVisibility(View.GONE);
             chongzhi3.setVisibility(View.GONE);
             delete3.setVisibility(View.GONE);
-        }else{
-            if ( show11.equals("")|| gongyu1.equals(gongyu) ){
-                if (gongyu1 !=null && gongyu1.equals(gongyu)){
-                    if ( !show33.equals("")){
-                        chongzhi1.setVisibility(View.VISIBLE);
-                        delete1.setVisibility(View.VISIBLE);
-                        show1.setText(zong);
-                        chongzhi2.setVisibility(View.VISIBLE);
-                        delete2.setVisibility(View.VISIBLE);
-                        show2.setText(show22);
-                        chongzhi3.setVisibility(View.VISIBLE);
-                        delete3.setVisibility(View.VISIBLE);
-                        show3.setText(show33);
-                    }else if ( show33.equals("") && !show22.equals("")){
-                        chongzhi1.setVisibility(View.VISIBLE);
-                        delete1.setVisibility(View.VISIBLE);
-                        show1.setText(zong);
-                        chongzhi2.setVisibility(View.VISIBLE);
-                        delete2.setVisibility(View.VISIBLE);
-                        show2.setText(show22);
-                        chongzhi3.setVisibility(View.GONE);
-                        delete3.setVisibility(View.GONE);
-                    }else{
-                        chongzhi1.setVisibility(View.VISIBLE);
-                        delete1.setVisibility(View.VISIBLE);
-                        show1.setText(zong);
-                        chongzhi2.setVisibility(View.GONE);
-                        delete2.setVisibility(View.GONE);
-                        chongzhi3.setVisibility(View.GONE);
-                        delete3.setVisibility(View.GONE);
-                    }
-                }else{
-                    chongzhi1.setVisibility(View.VISIBLE);
-                    delete1.setVisibility(View.VISIBLE);
-                    show1.setText(zong);
+        } else{
+            for (int i=0;i<dianfeiInfos.length;i++){
+                if (i+1 == dianfeiInfos.length){
+                    chongzhi1.setVisibility(View.GONE);
+                    delete1.setVisibility(View.GONE);
                     chongzhi2.setVisibility(View.GONE);
                     delete2.setVisibility(View.GONE);
                     chongzhi3.setVisibility(View.GONE);
                     delete3.setVisibility(View.GONE);
-                }
-            }else if ( !show11.equals("") && show22.equals("") || gongyu2.equals(gongyu)){
-                if( gongyu1!=null && gongyu2!=null &&  gongyu2.equals(gongyu)){
-                    if( show33.equals("") ){
+                    if (!show1.getText().toString().equals("")){
                         chongzhi1.setVisibility(View.VISIBLE);
                         delete1.setVisibility(View.VISIBLE);
-                        show1.setText(show11);
+                    }
+                    if (!show2.getText().toString().equals("")){
                         chongzhi2.setVisibility(View.VISIBLE);
                         delete2.setVisibility(View.VISIBLE);
-                        show2.setText(zong);
-                        chongzhi3.setVisibility(View.GONE);
-                        delete3.setVisibility(View.GONE);
-                    }else if( !show33.equals("") ){
-                        chongzhi1.setVisibility(View.VISIBLE);
-                        delete1.setVisibility(View.VISIBLE);
-                        show1.setText(show11);
-                        chongzhi2.setVisibility(View.VISIBLE);
-                        delete2.setVisibility(View.VISIBLE);
-                        show2.setText(zong);
+                    }
+                    if (!show3.getText().toString().equals("")){
                         chongzhi3.setVisibility(View.VISIBLE);
                         delete3.setVisibility(View.VISIBLE);
-                        show3.setText(show33);
                     }
-                }else {
-                    chongzhi1.setVisibility(View.VISIBLE);
-                    delete1.setVisibility(View.VISIBLE);
-                    show1.setText(show11);
-                    chongzhi2.setVisibility(View.VISIBLE);
-                    delete2.setVisibility(View.VISIBLE);
-                    show2.setText(zong);
-                    chongzhi3.setVisibility(View.GONE);
-                    delete3.setVisibility(View.GONE);
                 }
-            }else if ( !show11.equals("") && !show22.equals("") && show33.equals("") || (gongyu3!=null && gongyu3.equals(gongyu))){
-                chongzhi1.setVisibility(View.VISIBLE);
-                delete1.setVisibility(View.VISIBLE);
-                show1.setText(show11);
-                chongzhi2.setVisibility(View.VISIBLE);
-                delete2.setVisibility(View.VISIBLE);
-                show2.setText(show22);
-                chongzhi3.setVisibility(View.VISIBLE);
-                delete3.setVisibility(View.VISIBLE);
-                show3.setText(zong);
+                if (dianfeiInfos[i].Num.equals(num)){
+                    if (show1.getText().toString().equals("")){
+                        chongzhi1.setVisibility(View.VISIBLE);
+                        delete1.setVisibility(View.VISIBLE);
+                        show1.setText(dianfeiInfos[i].Addr);
+                        chongzhi2.setVisibility(View.GONE);
+                        delete2.setVisibility(View.GONE);
+                        chongzhi3.setVisibility(View.GONE);
+                        delete3.setVisibility(View.GONE);
+                    }else if (!show1.getText().toString().equals("") && show2.getText().toString().equals("")){
+                        chongzhi1.setVisibility(View.VISIBLE);
+                        delete1.setVisibility(View.VISIBLE);
+                        chongzhi2.setVisibility(View.VISIBLE);
+                        delete2.setVisibility(View.VISIBLE);
+                        show2.setText(dianfeiInfos[i].Addr);
+                        chongzhi3.setVisibility(View.GONE);
+                        delete3.setVisibility(View.GONE);
+                    } else if (!show1.getText().toString().equals("") && !show2.getText().toString().equals("") && show3.getText().toString().equals("")){
+                        chongzhi1.setVisibility(View.VISIBLE);
+                        delete1.setVisibility(View.VISIBLE);
+                        chongzhi2.setVisibility(View.VISIBLE);
+                        delete2.setVisibility(View.VISIBLE);
+                        chongzhi3.setVisibility(View.VISIBLE);
+                        delete3.setVisibility(View.VISIBLE);
+                        show3.setText(dianfeiInfos[i].Addr);
+                    }else if(!show1.getText().toString().equals("") && !show2.getText().toString().equals("") && !show3.getText().toString().equals("")) {
+                        chongzhi1.setVisibility(View.VISIBLE);
+                        delete1.setVisibility(View.VISIBLE);
+                        chongzhi2.setVisibility(View.VISIBLE);
+                        delete2.setVisibility(View.VISIBLE);
+                        chongzhi3.setVisibility(View.VISIBLE);
+                        delete3.setVisibility(View.VISIBLE);
+                        break;
+                    }
+                }
             }
         }
 
+
+        if (!show1.getText().toString().equals("")) {
+            if (show1.getText().toString().substring(0, 5).equals(gongyu))
+                show1.setText(addr);
+            if(addr1!=null)
+                if (!addr1.equals(""))
+                    show1.setText(addr1);
+        }
+        if (!show2.getText().toString().equals("")) {
+            if (show2.getText().toString().substring(0, 5).equals(gongyu))
+                show2.setText(addr);
+            if(addr2!=null)
+                if (!addr2.equals(""))
+                    show2.setText(addr2);
+        }
+        if (!show3.getText().toString().equals("")) {
+            if (show3.getText().toString().substring(0, 5).equals(gongyu))
+                show3.setText(addr);
+            if(addr3!=null)
+                if (!addr3.equals(""))
+                    show3.setText(addr3);
+        }
 
         button1.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(dianfei1.this,dianfei2.class);
+                intent.putExtra("num",num);
                 intent.putExtra("show1",show1.getText().toString());
                 intent.putExtra("show2",show2.getText().toString());
                 intent.putExtra("show3",show3.getText().toString());
@@ -153,9 +153,12 @@ public class dianfei1 extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
         delete1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String address = show1.getText().toString();
+                dianfeiInfoDBAapter.delete(address);
                 show1.setText("");
                 chongzhi1.setVisibility(View.GONE);
                 delete1.setVisibility(View.GONE);
@@ -165,6 +168,8 @@ public class dianfei1 extends AppCompatActivity {
         delete2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String address = show2.getText().toString();
+                dianfeiInfoDBAapter.delete(address);
                 show2.setText("");
                 chongzhi2.setVisibility(View.GONE);
                 delete2.setVisibility(View.GONE);
@@ -174,6 +179,8 @@ public class dianfei1 extends AppCompatActivity {
         delete3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String address = show3.getText().toString();
+                dianfeiInfoDBAapter.delete(address);
                 show3.setText("");
                 chongzhi3.setVisibility(View.GONE);
                 delete3.setVisibility(View.GONE);
@@ -184,6 +191,8 @@ public class dianfei1 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(dianfei1.this,dianfei3.class);
                 intent.putExtra("show1",show1.getText().toString());
+                intent.putExtra("num",num);
+                intent.putExtra("addr1",show1.getText().toString());
                 startActivity(intent);
             }
         });
@@ -192,6 +201,8 @@ public class dianfei1 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(dianfei1.this,dianfei3.class);
                 intent.putExtra("show2",show2.getText().toString());
+                intent.putExtra("num",num);
+                intent.putExtra("addr2",show2.getText().toString());
                 startActivity(intent);
             }
         });
@@ -200,6 +211,8 @@ public class dianfei1 extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(dianfei1.this,dianfei3.class);
                 intent.putExtra("show3",show3.getText().toString());
+                intent.putExtra("num",num);
+                intent.putExtra("addr3",show3.getText().toString());
                 startActivity(intent);
             }
         });

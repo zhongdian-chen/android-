@@ -2,9 +2,11 @@ package com.example.community;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.EditText;
 
 
 public class DianfeiInfoDBAapter {
@@ -12,10 +14,9 @@ public class DianfeiInfoDBAapter {
     private static final String DB_TABLE = "dianfeiinfo";
     private static final int DB_VERSION = 1;
     public static final String NUM = "num";
-    public static final String GONGYU = "gongyu";
-    public static final String LOUHAO = "louhao";
-    public static final String LOUCENG = "louceng";
-    public static final String QINSHIHAO = "qinshihao";
+    public static final String ADDR = "addr";
+    public static final String ELEC = "elec";
+
     private SQLiteDatabase db;
     private final Context context;
 
@@ -27,10 +28,8 @@ public class DianfeiInfoDBAapter {
         private static final String DB_CREATE =
                 "create table " + DB_TABLE
                         + "(" + NUM + " varchar(50), "
-                        + GONGYU + " varchar(500),"
-                        + LOUHAO + " varchar(100),"
-                        + LOUCENG + " varchar(200),"
-                        + QINSHIHAO + " varchar(200));";
+                        + ADDR + " varchar(500),"
+                        + ELEC + " varchar(50));";
 
         @Override
         public void onCreate(SQLiteDatabase db) {
@@ -67,10 +66,46 @@ public class DianfeiInfoDBAapter {
     public long insert(DianfeiInfo dianfeiInfo){
         ContentValues newValues = new ContentValues();
         newValues.put(NUM, dianfeiInfo.Num);
-        newValues.put(GONGYU,dianfeiInfo.gongyu);
-        newValues.put(LOUHAO,dianfeiInfo.louhao);
-        newValues.put(LOUCENG,dianfeiInfo.louceng);
-        newValues.put(QINSHIHAO,dianfeiInfo.qisnhihao);
+        newValues.put(ADDR,dianfeiInfo.Addr);
+        newValues.put(ELEC,dianfeiInfo.Elec);
         return db.insert(DB_TABLE, null, newValues);
     }
+
+    public int updateelec(DianfeiInfo dianfeiInfo, String addr) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(ELEC, dianfeiInfo.Elec);
+        return db.update(DB_TABLE, newValues, "addr=?", new String[] { String.valueOf(addr) });
+    }
+
+    public int updateaddr(DianfeiInfo dianfeiInfo, String addr) {
+        ContentValues newValues = new ContentValues();
+        newValues.put(ADDR, dianfeiInfo.Addr);
+        return db.update(DB_TABLE, newValues, "addr=?", new String[] { String.valueOf(addr) });
+    }
+
+    public long delete(String addr){
+        return db.delete(DB_TABLE, "addr=?", new String[] { String.valueOf(addr) });
+    }
+
+    public DianfeiInfo[] queryAllData(){
+        Cursor results = db.query(DB_TABLE, new String[] { NUM, ADDR, ELEC }, null,
+                null,null,null,null);
+        return ConvertToPeople(results);
+    }
+
+    private DianfeiInfo[] ConvertToPeople(Cursor cursor){
+        int resultCounts = cursor.getCount();
+        if (resultCounts == 0 || !cursor.moveToFirst())
+            return null;
+        DianfeiInfo[] dianfeiinfo = new DianfeiInfo[resultCounts];
+        for (int i = 0; i < resultCounts; i++){
+            dianfeiinfo[i] = new DianfeiInfo();
+            dianfeiinfo[i].Num = cursor.getString(cursor.getColumnIndex(NUM));
+            dianfeiinfo[i].Addr = cursor.getString(cursor.getColumnIndex(ADDR));
+            dianfeiinfo[i].Elec = cursor.getString(cursor.getColumnIndex(ELEC));
+            cursor.moveToNext();    // 将游标向下移动一位
+        }
+        return dianfeiinfo;
+    }
+
 }

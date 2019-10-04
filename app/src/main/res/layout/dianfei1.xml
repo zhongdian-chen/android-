@@ -25,12 +25,14 @@
                 android:gravity="center"
                 android:text="x"
                 android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/show1"
                 android:layout_width="194dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:layout_weight="1"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/chongzhi1"
@@ -55,12 +57,14 @@
                 android:gravity="center"
                 android:text="x"
                 android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/show2"
                 android:layout_width="194dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:layout_weight="1"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/chongzhi2"
@@ -85,12 +89,14 @@
                 android:gravity="center"
                 android:text="x"
                 android:textSize="24sp" />
+
             <TextView
                 android:id="@+id/show3"
                 android:layout_width="194dp"
                 android:layout_height="wrap_content"
+                android:ellipsize="end"
                 android:layout_weight="1"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/chongzhi3"
