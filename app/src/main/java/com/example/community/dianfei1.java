@@ -158,7 +158,6 @@ public class dianfei1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String address = show1.getText().toString();
-                dianfeiInfoDBAapter.delete(address);
                 show1.setText("");
                 chongzhi1.setVisibility(View.GONE);
                 delete1.setVisibility(View.GONE);
@@ -169,7 +168,6 @@ public class dianfei1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String address = show2.getText().toString();
-                dianfeiInfoDBAapter.delete(address);
                 show2.setText("");
                 chongzhi2.setVisibility(View.GONE);
                 delete2.setVisibility(View.GONE);
@@ -180,7 +178,6 @@ public class dianfei1 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String address = show3.getText().toString();
-                dianfeiInfoDBAapter.delete(address);
                 show3.setText("");
                 chongzhi3.setVisibility(View.GONE);
                 delete3.setVisibility(View.GONE);

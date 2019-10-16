@@ -20,7 +20,10 @@
                 android:id="@+id/info"
                 android:layout_width="wrap_content"
                 android:layout_height="80dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="24dp"
+                android:layout_marginTop="40dp"
+                android:textAlignment="center"/>
 
         </LinearLayout>
 
@@ -41,7 +44,8 @@
                 android:id="@+id/elec"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textSize="16dp"/>
         </LinearLayout>
 
         <LinearLayout

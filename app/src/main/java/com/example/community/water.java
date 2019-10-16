@@ -1,6 +1,8 @@
 package com.example.community;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -11,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,14 +24,23 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class water extends AppCompatActivity {
+    private String content;//二维码内容
+    private int width=650, height=650;//宽度，高度
+    private String error_correction_level="H", margin="1";//容错率，空白边距
+    private int color_black=Color.BLACK, color_white=Color.WHITE;//黑色色块，白色色块
+    private Bitmap qrcode_bitmap;//生成的二维码
+
     private WaterInfoDBAdapter waterInfoDBAdapter;
     private String XiaoQuItem;
     private String LouItem;
     private String WaterItem;
+    private Button check;
+    private ImageView iv_qrcode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.water);
+        iv_qrcode = findViewById(R.id.iv_qrcode);
         final TextView price = findViewById(R.id.price);
         final TextView sum = findViewById(R.id.sum);
         final Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
@@ -38,7 +50,7 @@ public class water extends AppCompatActivity {
         final EditText count=(EditText)findViewById(R.id.count);
         final String[] loudong1 = getResources().getStringArray(R.array.loudong1);
         final String[] loudong2 = getResources().getStringArray(R.array.loudong2);
-        Button check=findViewById(R.id.check);
+        check=findViewById(R.id.check);
         Button cancle = findViewById(R.id.cancel);
         final TextView name = findViewById(R.id.name);
         final TextView pho = findViewById(R.id.pho);
@@ -164,14 +176,6 @@ public class water extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                WaterInfo waterInfo = new WaterInfo();
-                waterInfo.Num = Num;
-                waterInfo.XiaoQuItem = XiaoQuItem;
-                waterInfo.LouItem = LouItem;
-                waterInfo.RoomNum = room.getText().toString();
-                waterInfo.WaterItem = WaterItem;
-                waterInfo.Count = count.getText().toString();
-                waterInfoDBAdapter.insert(waterInfo);
                 if(XiaoQuItem.equals("请选择校区")){
                     Toast.makeText(water.this,"请选择校区",Toast.LENGTH_SHORT).show();
                 }else if(LouItem.equals("请选择楼号")){
@@ -183,16 +187,32 @@ public class water extends AppCompatActivity {
                 }else if(TextUtils.isEmpty(count.getText())){
                     Toast.makeText(water.this,"请输入桶装水数量",Toast.LENGTH_SHORT).show();
                 }else{
-                    Toast.makeText(water.this, "工作人员正在加急处理中", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(water.this, main.class);
-                    intent.putExtra("name",Name);
-                    intent.putExtra("pho",Pho);
-                    intent.putExtra("num",Num);
-                    startActivity(intent);
+                    content = sum.getText().toString();
+                    qrcode_bitmap = QRCodeUtil.createQRCodeBitmap(content, width, height, "UTF-8",
+                            error_correction_level, margin, color_black, color_white);
+                    iv_qrcode.setImageBitmap(qrcode_bitmap);
                 }
             }
         });
-
+        iv_qrcode.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                WaterInfo waterInfo = new WaterInfo();
+                waterInfo.Num = Num;
+                waterInfo.XiaoQuItem = XiaoQuItem;
+                waterInfo.LouItem = LouItem;
+                waterInfo.RoomNum = room.getText().toString();
+                waterInfo.WaterItem = WaterItem;
+                waterInfo.Count = count.getText().toString();
+                waterInfoDBAdapter.insert(waterInfo);
+                Intent intent = new Intent(water.this, main.class);
+                intent.putExtra("name",Name);
+                intent.putExtra("pho",Pho);
+                intent.putExtra("num",Num);
+                startActivity(intent);
+                return true;
+            }
+        });
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

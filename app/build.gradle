@@ -1,4 +1,11 @@
 apply plugin: 'com.android.application'
+//短信验证码
+apply plugin: 'com.mob.sdk'
+MobSDK {
+    appKey "2cbc60dab5480"
+    appSecret "784ac7a301b994656848216b3646543a"
+    SMSSDK {}
+}
 
 android {
     compileSdkVersion 28
@@ -19,6 +26,8 @@ android {
 }
 
 dependencies {
+    //二维码
+    implementation 'com.google.zxing:core:3.3.0'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:28.0.0'
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'

@@ -22,7 +22,8 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="70dp"
                 android:layout_weight="1"
-                app:srcCompat="@drawable/tubiao" />
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/pic" />
 
             <Button
                 android:id="@+id/browse"
