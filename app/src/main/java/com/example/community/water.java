@@ -24,23 +24,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class water extends AppCompatActivity {
-    private String content;//二维码内容
-    private int width=650, height=650;//宽度，高度
-    private String error_correction_level="H", margin="1";//容错率，空白边距
-    private int color_black=Color.BLACK, color_white=Color.WHITE;//黑色色块，白色色块
-    private Bitmap qrcode_bitmap;//生成的二维码
 
     private WaterInfoDBAdapter waterInfoDBAdapter;
     private String XiaoQuItem;
     private String LouItem;
     private String WaterItem;
     private Button check;
-    private ImageView iv_qrcode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.water);
-        iv_qrcode = findViewById(R.id.iv_qrcode);
         final TextView price = findViewById(R.id.price);
         final TextView sum = findViewById(R.id.sum);
         final Spinner spinner1=(Spinner)findViewById(R.id.spinner1);
@@ -187,32 +180,24 @@ public class water extends AppCompatActivity {
                 }else if(TextUtils.isEmpty(count.getText())){
                     Toast.makeText(water.this,"请输入桶装水数量",Toast.LENGTH_SHORT).show();
                 }else{
-                    content = sum.getText().toString();
-                    qrcode_bitmap = QRCodeUtil.createQRCodeBitmap(content, width, height, "UTF-8",
-                            error_correction_level, margin, color_black, color_white);
-                    iv_qrcode.setImageBitmap(qrcode_bitmap);
+                    WaterInfo waterInfo = new WaterInfo();
+                    waterInfo.Num = Num;
+                    waterInfo.XiaoQuItem = XiaoQuItem;
+                    waterInfo.LouItem = LouItem;
+                    waterInfo.RoomNum = room.getText().toString();
+                    waterInfo.WaterItem = WaterItem;
+                    waterInfo.Count = count.getText().toString();
+                    waterInfoDBAdapter.insert(waterInfo);
+                    Toast.makeText(water.this,"工作人员正在加急处理~~~",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(water.this, main.class);
+                    intent.putExtra("name",Name);
+                    intent.putExtra("pho",Pho);
+                    intent.putExtra("num",Num);
+                    startActivity(intent);
                 }
             }
         });
-        iv_qrcode.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                WaterInfo waterInfo = new WaterInfo();
-                waterInfo.Num = Num;
-                waterInfo.XiaoQuItem = XiaoQuItem;
-                waterInfo.LouItem = LouItem;
-                waterInfo.RoomNum = room.getText().toString();
-                waterInfo.WaterItem = WaterItem;
-                waterInfo.Count = count.getText().toString();
-                waterInfoDBAdapter.insert(waterInfo);
-                Intent intent = new Intent(water.this, main.class);
-                intent.putExtra("name",Name);
-                intent.putExtra("pho",Pho);
-                intent.putExtra("num",Num);
-                startActivity(intent);
-                return true;
-            }
-        });
+
         cancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

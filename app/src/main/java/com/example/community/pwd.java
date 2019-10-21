@@ -34,7 +34,7 @@ public class pwd extends AppCompatActivity {
         public void onClick(View v) {
 
             People people = new People();
-            people.Pwd = newpwd.getText().toString();
+            people.Pwd = MD5Util.encrypBy(newpwd.getText().toString());
             if((newpwd.getText().toString()).equals(checkpwd.getText().toString())){
                 dbAdapter.updatepwd(people,pho);
                 Toast.makeText(pwd.this,"密码重置成功，请登录",Toast.LENGTH_SHORT).show();

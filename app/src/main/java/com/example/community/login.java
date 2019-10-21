@@ -72,7 +72,7 @@ public class login extends AppCompatActivity {
                 Toast.makeText(login.this,"请输入密码",Toast.LENGTH_SHORT).show();
             }else{
                 for (int i = 0; i < peoples.length; i++){
-                    if (Num.equals(peoples[i].Num) && Pwd.equals(peoples[i].Pwd)) {
+                    if (Num.equals(peoples[i].Num) && MD5Util.encrypBy(Pwd).equals(peoples[i].Pwd)) {
                         Intent intent=new Intent(login.this,main.class);
                         Pho = peoples[i].Pho;
                         Name = peoples[i].Name;

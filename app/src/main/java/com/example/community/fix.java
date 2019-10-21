@@ -198,9 +198,10 @@ public class fix extends AppCompatActivity {
         }
         if (Build.VERSION.SDK_INT < 24) {
             imageUri = Uri.fromFile(outputImage);
-        } else {
-            imageUri = FileProvider.getUriForFile(fix.this, "com.example.xch.generateqrcode.fileprovider", outputImage);
         }
+//        else {
+//            imageUri = FileProvider.getUriForFile(fix.this, "com.example.xch.generateqrcode.fileprovider", outputImage);
+//        }
         // 启动相机程序
         Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
